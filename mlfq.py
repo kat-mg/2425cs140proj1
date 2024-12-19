@@ -9,6 +9,7 @@ class Proc:
         self.io = io
         self.turnaround = 0
         self.waitTime = 0
+        self.quantum = 4
 
 class MLFQ:
     
@@ -46,6 +47,7 @@ class MLFQ:
 
             # Check if current process will give up CPU
             willContextSwitch = False
+            demoted = False
             if self.running is not None:
                 if self.running.burst[0] == 0:             # Process finished
                     print(self.running.pid, " DONE")
@@ -60,8 +62,10 @@ class MLFQ:
                     self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
                     self.running = None                         
                     willContextSwitch = True
-                elif self.queues[0] and self.time % 4 == 0:   # If it's Q1 (RR) and time quantum expired
-                    self.queues[0].append(self.running)       # Move to end of Q1
+                    demoted = True
+                elif self.queues[0] and self.running.quantum == 0:   # If it's Q1 (RR) and time quantum expired
+                    self.queues[0].append(self.running)              # Move to end of Q1
+                    self.running.quantum = 4                         # Reset quantum
                     self.running = None
                     willContextSwitch = True
             
@@ -88,13 +92,23 @@ class MLFQ:
             if self.running is not None:
                 self.running.burst[0] -= 1
                 self.running.timeAllotment -= 1
+                if (self.running.priority == 0):
+                    self.running.quantum -= 1
             
             # Add time to IO processes
             for proc in self.io:
                 proc.io -= 1
 
+            print("Queues : ", self.queues[0], self.queues[1], self.queues[2])
+            print("CPU : ", self.running)       # not sure what should be printed tho if it's context switching
+            if self.io:
+                print("IO : ", self.io.map(lambda x: x.pid))
+            if demoted:
+                print(self.running.pid, " DEMOTED")
+
             # Increment time
             self.time += 1
+        print("SIMULATION DONE")
 
 
 if __name__ == "__main__":
