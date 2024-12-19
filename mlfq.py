@@ -37,9 +37,9 @@ class MLFQ:
             for proc in self.procs:
                 if proc.arrival == self.time:
                     procsArrived.append(proc)
-            procsArrived.sort()                             # Sort by arrival time in case multiple processes arrive at the same time
+            procsArrived.sort(key=lambda x: x.pid)                             # Sort by proc name in case multiple processes arrive at the same time
             if procsArrived:
-                print("Arriving : ", procsArrived)
+                print("Arriving : ", procsArrived.map(lambda x: x.pid))
             for proc in procsArrived:
                 self.addProcToQ1(proc)
             procsArrived = []                               # Clear the list
