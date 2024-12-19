@@ -10,6 +10,9 @@ class Proc:
         self.turnaround = 0
         self.waitTime = 0
         self.quantum = 4
+    
+    def __repr__(self):
+        return self.pid
 
 class MLFQ:
     
@@ -28,68 +31,93 @@ class MLFQ:
     def addProcToQ1(self, proc):
         self.queues[0].append(proc)
 
+    def printQueuesCPUIODemo(self, demoted):
+        print("Queues : ",self.queues[0], self.queues[1], self.queues[2])
+        print("CPU : ", self.running)       # not sure what should be printed tho if it's context switching
+        if self.io:
+            print("IO : ", self.io)
+        if demoted:
+            print(self.running.pid, " DEMOTED")
+
+
     # TO DO: Implement MLFQ (print output at the same time)
     def run(self):
-        while len(self.queues[0]) > 0 or len(self.queues[1]) > 0 or len(self.queues[2]) > 0 or len(self.io) > 0:
+        willContextSwitch = 0
+        finished = False
+        while not finished:
             print("At Time = ", self.time)
+
+            # Remove processes with no burst or io left
+            for proc in self.procs:
+                if not proc.burst and not proc.io:
+                    self.procs.remove(proc)
+
+            # Arrange Q3 for SJF
+            self.queues[2].sort(key=lambda x: x.burst[0])
 
             # Check for new arrivals
             procsArrived = []
             for proc in self.procs:
                 if proc.arrival == self.time:
                     procsArrived.append(proc)
-            procsArrived.sort(key=lambda x: x.pid)                             # Sort by proc name in case multiple processes arrive at the same time
+            procsArrived.sort(key=lambda x: x.pid)                                         # Sort by proc name in case multiple processes arrive at the same time
             if procsArrived:
-                print("Arriving : ", procsArrived.map(lambda x: x.pid))
+                print("Arriving : ", procsArrived)
             for proc in procsArrived:
                 self.addProcToQ1(proc)
-            procsArrived = []                               # Clear the list
+            procsArrived = []                                                              # Clear the list
 
             # Check if current process will give up CPU
-            willContextSwitch = False
             demoted = False
             if self.running is not None:
-                if self.running.burst[0] == 0:             # Process finished
-                    print(self.running.pid, " DONE")
-                    if self.running.io > 0:                # Process has IO
-                        self.io.append(self.running)
-                    self.running.burst.pop(0)              # Remove the finished burst
+                if self.running.burst[0] == 0:                                             # Process burst finished
+                    if self.running.io:                                                    # Process has IO
+                        self.io.append(self.running)                                       # Add to IO list
+                    if self.running.burst[1:]:                                             # Process has more bursts
+                        self.running.burst.pop(0)                                          # Remove the finished burst
                     self.running = None
-                    willContextSwitch = True
-                elif self.running.timeAllotment == 0:  # Time allotment expired
+                    willContextSwitch = self.contextSwitch
+
+                elif self.running.timeAllotment == 0:                                      # Time allotment expired
                     self.running.priority += 1                                             # Lower priority
                     self.queues[self.running.priority].append(self.running)                # Move to lower queue
-                    self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
+                    if (self.running.priority <= 1):                                       # If it's Q2
+                        self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
                     self.running = None                         
-                    willContextSwitch = True
+                    willContextSwitch = self.contextSwitch
                     demoted = True
+
                 elif self.queues[0] and self.running.quantum == 0:   # If it's Q1 (RR) and time quantum expired
                     self.queues[0].append(self.running)              # Move to end of Q1
                     self.running.quantum = 4                         # Reset quantum
                     self.running = None
-                    willContextSwitch = True
+                    willContextSwitch = self.contextSwitch
+            else:
+                for i in range(3):
+                    if (self.queues[i]):
+                        self.running = self.queues[i].pop(0)
+                        break
             
             # Check if IO process will finish
             for proc in self.io:
-                if proc.io == 0:
+                if proc.io[0] == 0:
                     self.queues[proc.priority].append(proc)
                     self.io.remove(proc)                      # Remove the finished IO from the MLFQ IO list
                     proc.io.pop(0)                            # Remove the finished IO from the process IO list
             
-            # Check if we need to context swith
-            if willContextSwitch:
-                self.time += self.contextSwitch
-                willSwitchTo = None
-                if self.queues[0]:
-                    willSwitchTo = self.queues[0].pop(0)
-                elif self.queues[1]:
-                    willSwitchTo = self.queues[1].pop(0)
-                elif self.queues[2]:
-                    willSwitchTo = self.queues[2].pop(0)
-                self.running = willSwitchTo
+            # Check if we need to context switch                 !! BUG: doesnt go here if context switch is 0
+            if willContextSwitch > 0:
+                if willContextSwitch == self.contextSwitch:
+                    willSwitchTo = None
+                    for i in range(3):
+                        if (self.queues[i]):
+                            willSwitchTo = self.queues[i].pop(0)
+                            break
+                    self.running = willSwitchTo
+                willContextSwitch -= 1
             
             # Add time to running process
-            if self.running is not None:
+            if self.running is not None and willContextSwitch == 0:
                 self.running.burst[0] -= 1
                 self.running.timeAllotment -= 1
                 if (self.running.priority == 0):
@@ -97,17 +125,15 @@ class MLFQ:
             
             # Add time to IO processes
             for proc in self.io:
-                proc.io -= 1
+                proc.io[0] -= 1
 
-            print("Queues : ", self.queues[0], self.queues[1], self.queues[2])
-            print("CPU : ", self.running)       # not sure what should be printed tho if it's context switching
-            if self.io:
-                print("IO : ", self.io.map(lambda x: x.pid))
-            if demoted:
-                print(self.running.pid, " DEMOTED")
+            self.printQueuesCPUIODemo(demoted)
 
             # Increment time
             self.time += 1
+
+            if not self.queues[0] and not self.queues[1] and not self.queues[2] and not self.running and not self.io:
+                finished = True
         print("SIMULATION DONE")
 
 
@@ -148,10 +174,10 @@ if __name__ == "__main__":
         ios = []
     
     # For testing
-    for proc in mlfq.procs:
-        print(proc.pid, proc.arrival, proc.burst, proc.io)
-    print(mlfq.timeAllotment)
-    print(mlfq.contextSwitch)
+    # for proc in mlfq.procs:
+    #     print(proc.pid, proc.arrival, proc.burst, proc.io)
+    # print(mlfq.timeAllotment)
+    # print(mlfq.contextSwitch)
     # Test end
 
     mlfq.run()
