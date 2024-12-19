@@ -47,7 +47,7 @@ class MLFQ:
         while not finished:
             print("At Time = ", self.time)
 
-            # Remove processes with no burst or io left
+            # Remove processes with no burst or io left (idk if need siya)        
             for proc in self.procs:
                 if not proc.burst and not proc.io:
                     self.procs.remove(proc)
@@ -172,12 +172,5 @@ if __name__ == "__main__":
         mlfq.addProc(proc)
         bursts = []
         ios = []
-    
-    # For testing
-    # for proc in mlfq.procs:
-    #     print(proc.pid, proc.arrival, proc.burst, proc.io)
-    # print(mlfq.timeAllotment)
-    # print(mlfq.contextSwitch)
-    # Test end
 
     mlfq.run()
