@@ -87,8 +87,11 @@ class MLFQ:
                 if self.running.burst[0] == 0:                                             # Process burst finished
                     if self.running.io:                                                    # Process has IO
                         self.io.append(self.running)                                       # Add to IO list
-                        self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
-                        self.running.quantum = 4                                           # Reset quantum
+                        if self.running.timeAllotment != 0:                                # If time allotment is 0
+                            self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
+                            self.running.quantum = 4                                           # Reset quantum
+                        else:
+                            self.running.priority += 1                                         # Lower priority
                     if self.running.burst[1:]:                                             # Process has more bursts
                         self.running.burst.pop(0)                                          # Remove the finished burst
                     else:
@@ -185,40 +188,41 @@ class MLFQ:
 
 
 if __name__ == "__main__":
-
-    print("# Enter Scheduler Details #")
+    # Open the input file
+    with open("testInput.txt", "r") as file:
+        # Read lines from the file
+        lines = file.readlines()
+    
+    # Parse input from the file
     # Get num of procs
-    numProc = int(input())
+    numProc = int(lines[0].strip())
+
     # Get time allotments for each queue
-    timeAllotments = []
-    for i in range(2):
-        timeAllotment = int(input())
-        timeAllotments.append(timeAllotment)
+    timeAllotments = [int(lines[1].strip()), int(lines[2].strip())]
+
     # Get context switch time
-    contextSwitch = int(input())
+    contextSwitch = int(lines[3].strip())
 
     # Create MLFQ
     mlfq = MLFQ(timeAllotments[0], timeAllotments[1], contextSwitch)
 
     # Get proc details
-    print("# Enter 3 Process Details #")
-    bursts = []
-    ios = []
     for i in range(numProc):
-        procDeets = input().split(";")
+        procDeets = lines[4 + i].strip().split(";")
         pid = procDeets[0]
         arrival = int(procDeets[1])
-        for i in range(2, len(procDeets)):
-            if (i % 2 == 0):
-                bursts.append(int(procDeets[i]))
+        bursts = []
+        ios = []
+        for j in range(2, len(procDeets)):
+            if j % 2 == 0:
+                bursts.append(int(procDeets[j]))
             else:
-                ios.append(int(procDeets[i]))
+                ios.append(int(procDeets[j]))
 
         proc = Proc(pid, bursts, timeAllotments[0], arrival, ios)
         mlfq.addProc(proc)
-        bursts = []
-        ios = []
 
-    print("# Scheduling Results #")
+    # Run the MLFQ simulation
     mlfq.run()
+
 
