@@ -20,7 +20,7 @@ class Proc:
 class MLFQ:
     
     def __init__(self, q1TimeAllotment, q2TimeAllotment, contextSwitch):
-        self.timeAllotment = [q1TimeAllotment, q2TimeAllotment]
+        self.timeAllotment = [q1TimeAllotment, q2TimeAllotment, 0]
         self.queues = [[], [], []]
         self.prevProc = None                            # Previously run process in each queue
         self.contextSwitch = contextSwitch
@@ -45,6 +45,12 @@ class MLFQ:
 
         if self.io:
             print("IO : ", self.io)
+
+        print("\nProcesses:")
+        for proc in self.procs:
+            print(f"{proc.pid} -> Priority: {proc.priority}, Burst: {proc.burst}, "
+                f"TimeAllotment: {proc.timeAllotment}, IO: {proc.io}, "
+                f"Quantum: {proc.quantum}, Turnaround: {proc.turnaround}, WaitTime: {proc.waitTime}")
 
         print("")
 
@@ -106,7 +112,10 @@ class MLFQ:
                                 self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
                                 self.running.quantum = 4                                           # Reset quantum
                             else:
+                                print(self.running.pid, " DEMOTED")
+                                self.queues[2].sort(key=lambda x: x.burst[0])
                                 self.running.priority += 1                                         # Lower priority
+                                self.running.timeAllotment = self.timeAllotment[self.running.priority]
                         if self.running.burst[1:]:                                             # Process has more bursts
                             self.running.burst.pop(0)                                          # Remove the finished burst
                         else:
@@ -122,9 +131,10 @@ class MLFQ:
                     elif self.running.timeAllotment == 0 and self.running.priority < 2:        # Time allotment expired
                         self.running.priority += 1                                             # Lower priority
                         self.queues[self.running.priority].append(self.running)                # Move to lower queue
-                        if (self.running.priority < 2):                                       # If it's not Q2
+                        if (self.running.priority < 2):                                        # If it's not Q2
                             self.running.timeAllotment = self.timeAllotment[self.running.priority] # Set time allotment
                         print(self.running.pid, " DEMOTED")
+                        self.queues[2].sort(key=lambda x: x.burst[0])
                         self.prevProc = self.running                                           # Assign as previous process
                         self.running = None                         
                         willContextSwitch = self.contextSwitch
