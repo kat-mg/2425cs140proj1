@@ -62,6 +62,18 @@ class MLFQ:
         for proc in self.procs:
             print(f"Waiting time for Process {proc.pid} : {proc.waitTime} ms")
 
+    def preemptionCheck(self):
+        preempted = False
+        for i in range(3):
+            if self.queues[i] and self.running.priority > i:                           # If there's a higher priority process
+                self.queues[self.running.priority].append(self.running)
+                self.prevProc = self.running
+                self.running = None
+                preempted = True
+                break
+        
+        return preempted
+
     def run(self):
         willContextSwitch = 0
         finished = False
@@ -84,16 +96,7 @@ class MLFQ:
 
             # Check if current process will give up CPU
             if self.running is not None:
-                preempted = False
-
-                for i in range(3):
-                    if self.queues[i] and self.running.priority > i:                           # If there's a higher priority process
-                        self.queues[self.running.priority].append(self.running)
-                        self.prevProc = self.running
-                        self.running = None
-                        willContextSwitch = self.contextSwitch
-                        preempted = True
-                        break
+                preempted = self.preemptionCheck()
 
                 if not preempted:
                     if self.running.burst[0] == 0:                                             # Process burst finished
@@ -131,11 +134,9 @@ class MLFQ:
                         self.running.quantum = 4                         # Reset quantum
                         self.prevProc = self.running                     # Assign as previous process
                         self.running = None
-                        willContextSwitch = self.contextSwitch       
-            
-                # For testing
-                if (preempted):
-                    print("PREEMPTED")
+                        willContextSwitch = self.contextSwitch
+                else:
+                    willContextSwitch = self.contextSwitch
 
             # Check if IO process will finish
             for proc in self.io[:]:
@@ -151,6 +152,9 @@ class MLFQ:
                         proc.turnaround = self.time - proc.arrival          # Calculate turnaround time
                         proc.waitTime = proc.turnaround - proc.totalBurst - proc.totalIO # Calculate wait time
                         proc.endTime = self.time
+            
+            if self.running is not None and self.preemptionCheck():
+                willContextSwitch = self.contextSwitch
 
             # Check next process to run
             current = None
