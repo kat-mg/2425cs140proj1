@@ -46,12 +46,6 @@ class MLFQ:
         if self.io:
             print("IO : ", self.io)
 
-        print("\nProcesses:")
-        for proc in self.procs:
-            print(f"{proc.pid} -> Priority: {proc.priority}, Burst: {proc.burst}, "
-                f"TimeAllotment: {proc.timeAllotment}, IO: {proc.io}, "
-                f"Quantum: {proc.quantum}, Turnaround: {proc.turnaround}, WaitTime: {proc.waitTime}")
-
         print("")
 
     def calculateAverageTurnaround(self):
@@ -215,39 +209,39 @@ class MLFQ:
 
 
 if __name__ == "__main__":
-    # Open the input file
-    with open("test3.txt", "r") as file:
-        # Read lines from the file
-        lines = file.readlines()
-    
-    # Parse input from the file
+
+    print("# Enter Scheduler Details #")
     # Get num of procs
-    numProc = int(lines[0].strip())
-
+    numProc = int(input())
     # Get time allotments for each queue
-    timeAllotments = [int(lines[1].strip()), int(lines[2].strip())]
-
+    timeAllotments = []
+    for i in range(2):
+        timeAllotment = int(input())
+        timeAllotments.append(timeAllotment)
     # Get context switch time
-    contextSwitch = int(lines[3].strip())
+    contextSwitch = int(input())
 
     # Create MLFQ
     mlfq = MLFQ(timeAllotments[0], timeAllotments[1], contextSwitch)
 
     # Get proc details
+    print("# Enter 3 Process Details #")
+    bursts = []
+    ios = []
     for i in range(numProc):
-        procDeets = lines[4 + i].strip().split(";")
+        procDeets = input().split(";")
         pid = procDeets[0]
         arrival = int(procDeets[1])
-        bursts = []
-        ios = []
-        for j in range(2, len(procDeets)):
-            if j % 2 == 0:
-                bursts.append(int(procDeets[j]))
+        for i in range(2, len(procDeets)):
+            if (i % 2 == 0):
+                bursts.append(int(procDeets[i]))
             else:
-                ios.append(int(procDeets[j]))
+                ios.append(int(procDeets[i]))
 
         proc = Proc(pid, bursts, timeAllotments[0], arrival, ios)
         mlfq.addProc(proc)
+        bursts = []
+        ios = []
 
-    # Run the MLFQ simulation
+    print("# Scheduling Results #")
     mlfq.run()
