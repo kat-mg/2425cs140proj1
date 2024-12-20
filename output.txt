@@ -1,0 +1,219 @@
+At Time =  0
+Arriving :  [B, C]
+Queues :  [C] [] []
+CPU :  B
+
+At Time =  1
+Queues :  [C] [] []
+CPU :  B
+
+At Time =  2
+Arriving :  [A]
+Queues :  [C, A] [] []
+CPU :  B
+
+At Time =  3
+Queues :  [C, A] [] []
+CPU :  B
+
+At Time =  4
+Queues :  [A, B] [] []
+CPU :  C
+
+At Time =  5
+Queues :  [A, B] [] []
+CPU :  C
+
+At Time =  6
+Queues :  [A, B] [] []
+CPU :  C
+
+At Time =  7
+Queues :  [A, B] [] []
+CPU :  C
+
+At Time =  8
+Queues :  [A, B] [] []
+CPU :  C
+
+At Time =  9
+Queues :  [B, C] [] []
+CPU :  A
+
+At Time =  10
+Queues :  [B, C] [] []
+CPU :  A
+
+At Time =  11
+Queues :  [B, C] [] []
+CPU :  A
+
+At Time =  12
+Queues :  [C] [] []
+CPU :  B
+IO :  [A]
+
+At Time =  13
+Queues :  [C] [] []
+CPU :  B
+IO :  [A]
+
+At Time =  14
+Queues :  [A] [] []
+CPU :  C
+IO :  [B]
+
+At Time =  15
+Queues :  [A] [] []
+CPU :  C
+IO :  [B]
+
+At Time =  16
+Queues :  [A, B] [] []
+CPU :  C
+
+At Time =  17
+Queues :  [A, B] [] []
+CPU :  C
+
+At Time =  18
+Queues :  [A, B] [] []
+CPU :  C
+
+At Time =  19
+Queues :  [B] [C] []
+CPU :  A
+A  DEMOTED
+
+At Time =  20
+Queues :  [B] [C] []
+CPU :  A
+
+At Time =  21
+Queues :  [B] [C] []
+CPU :  A
+
+At Time =  22
+Queues :  [A] [C] []
+CPU :  B
+
+At Time =  23
+Queues :  [A] [C] []
+CPU :  B
+
+At Time =  24
+Queues :  [A] [C] []
+CPU :  B
+
+At Time =  25
+Queues :  [A] [C] []
+CPU :  B
+
+At Time =  26
+Queues :  [B] [C] []
+CPU :  A
+
+At Time =  27
+Queues :  [B] [C] []
+CPU :  A
+
+At Time =  28
+Queues :  [B] [C] []
+CPU :  A
+
+At Time =  29
+Queues :  [B] [C] []
+CPU :  A
+
+At Time =  30
+Queues :  [B] [C] []
+CPU :  A
+
+At Time =  31
+A  DONE
+Queues :  [] [C] []
+CPU :  B
+
+At Time =  32
+Queues :  [] [C] []
+CPU :  B
+
+At Time =  33
+Queues :  [] [C] []
+CPU :  B
+
+At Time =  34
+Queues :  [] [] []
+CPU :  C
+IO :  [B]
+
+At Time =  35
+Queues :  [] [] []
+CPU :  C
+IO :  [B]
+
+At Time =  36
+Queues :  [B] [] []
+CPU :  C
+
+At Time =  37
+Queues :  [C] [] []
+CPU :  B
+
+At Time =  38
+Queues :  [C] [] []
+CPU :  B
+
+At Time =  39
+Queues :  [C] [] []
+CPU :  B
+
+At Time =  40
+Queues :  [B] [] []
+CPU :  C
+
+At Time =  41
+Queues :  [B] [] []
+CPU :  C
+
+At Time =  42
+Queues :  [B] [] []
+CPU :  C
+
+At Time =  43
+Queues :  [B] [] []
+CPU :  C
+
+At Time =  44
+Queues :  [B] [] []
+CPU :  C
+
+At Time =  45
+Queues :  [B] [] []
+CPU :  C
+
+At Time =  46
+Queues :  [B] [] []
+CPU :  C
+
+At Time =  47
+Queues :  [] [] [C]
+CPU :  B
+B  DEMOTED
+
+At Time =  48
+Queues :  [] [] [C]
+CPU :  B
+
+At Time =  49
+Queues :  [] [] [C]
+CPU :  B
+
+At Time =  50
+Queues :  [] [] [C]
+CPU :  B
+
+At Time =  51
+B  DONE
+Queues :  [] [] []
+CPU :  C

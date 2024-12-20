@@ -38,6 +38,7 @@ class MLFQ:
             print("IO : ", self.io)
         if demoted:
             print(self.running.pid, " DEMOTED")
+        print("")
 
 
     # TO DO: Implement MLFQ (print output at the same time)
@@ -46,11 +47,6 @@ class MLFQ:
         finished = False
         while not finished:
             print("At Time = ", self.time)
-
-            # Remove processes with no burst or io left (idk if need siya)        
-            for proc in self.procs:
-                if not proc.burst and not proc.io:
-                    self.procs.remove(proc)
 
             # Arrange Q3 for SJF
             self.queues[2].sort(key=lambda x: x.burst[0])
@@ -73,16 +69,20 @@ class MLFQ:
                 if self.running.burst[0] == 0:                                             # Process burst finished
                     if self.running.io:                                                    # Process has IO
                         self.io.append(self.running)                                       # Add to IO list
+                        self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
                     if self.running.burst[1:]:                                             # Process has more bursts
                         self.running.burst.pop(0)                                          # Remove the finished burst
+                    else:
+                        print(self.running.pid, " DONE")                                   # Proc is done
+                        self.running.turnaround = self.time - self.running.arrival         # Calculate turnaround time
                     self.running = None
                     willContextSwitch = self.contextSwitch
 
-                elif self.running.timeAllotment == 0:                                      # Time allotment expired
+                elif self.running.timeAllotment == 0 and self.running.priority < 2:        # Time allotment expired
                     self.running.priority += 1                                             # Lower priority
                     self.queues[self.running.priority].append(self.running)                # Move to lower queue
-                    if (self.running.priority <= 1):                                       # If it's Q2
-                        self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
+                    if (self.running.priority <= 1):                                       # If it's not Q2
+                        self.running.timeAllotment = self.timeAllotment[self.running.priority] # Set time allotment
                     self.running = None                         
                     willContextSwitch = self.contextSwitch
                     demoted = True
@@ -102,22 +102,23 @@ class MLFQ:
             for proc in self.io:
                 if proc.io[0] == 0:
                     self.queues[proc.priority].append(proc)
-                    self.io.remove(proc)                      # Remove the finished IO from the MLFQ IO list
-                    proc.io.pop(0)                            # Remove the finished IO from the process IO list
+                    self.io.pop(0)                             # Remove the finished IO from the MLFQ IO list
+                    proc.io.pop(0)                             # Remove the finished IO from the process IO list
             
-            # Check if we need to context switch                 !! BUG: doesnt go here if context switch is 0
-            if willContextSwitch > 0:
-                if willContextSwitch == self.contextSwitch:
+            # Check if we need to context switch
+            if willContextSwitch > 0 or self.contextSwitch == 0:
+                if willContextSwitch == self.contextSwitch or self.contextSwitch == 0:
                     willSwitchTo = None
                     for i in range(3):
                         if (self.queues[i]):
                             willSwitchTo = self.queues[i].pop(0)
                             break
                     self.running = willSwitchTo
-                willContextSwitch -= 1
+                if self.contextSwitch != 0:
+                    willContextSwitch -= 1
             
             # Add time to running process
-            if self.running is not None and willContextSwitch == 0:
+            if self.running is not None and (willContextSwitch == 0 or self.contextSwitch == 0):
                 self.running.burst[0] -= 1
                 self.running.timeAllotment -= 1
                 if (self.running.priority == 0):
