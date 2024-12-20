@@ -89,6 +89,7 @@ class MLFQ:
                 for i in range(3):
                     if self.queues[i] and self.running.priority > i:                           # If there's a higher priority process
                         self.queues[self.running.priority].append(self.running)
+                        self.prevProc = self.running
                         self.running = None
                         willContextSwitch = self.contextSwitch
                         preempted = True
@@ -158,7 +159,7 @@ class MLFQ:
                     if self.queues[i]:
                         current = self.queues[i][0]
                         break
-
+            
             if willContextSwitch > 0:                                  # Context switching in progress
                 if current != self.prevProc:                           # If the process is not the previous process, then CS
                     print(f"CONTEXT SWITCHING: {willContextSwitch}ms left")
