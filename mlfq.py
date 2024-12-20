@@ -55,6 +55,7 @@ class MLFQ:
         return round(totalTurnaround / len(self.procs), 2)
     
     def printOutput(self):
+        self.procs.sort(key=lambda x: x.pid)
         for proc in self.procs:
             print(f"Turn-around time for Process {proc.pid} : {proc.endTime} - {proc.arrival} = {proc.turnaround} ms")
         print(f"Average Turn-around time: {self.calculateAverageTurnaround()} ms")
@@ -183,30 +184,28 @@ class MLFQ:
         self.printOutput()
 
 
-
 if __name__ == "__main__":
 
+    print("# Enter Scheduler Details #")
     # Get num of procs
-    numProc = int(input("Enter number of processes: "))
-
+    numProc = int(input())
     # Get time allotments for each queue
     timeAllotments = []
     for i in range(2):
-        print("Enter time allotment for queue", i+1, ": ", end="")
         timeAllotment = int(input())
         timeAllotments.append(timeAllotment)
-
     # Get context switch time
-    contextSwitch = int(input("Enter context switch time: "))
+    contextSwitch = int(input())
 
     # Create MLFQ
     mlfq = MLFQ(timeAllotments[0], timeAllotments[1], contextSwitch)
 
     # Get proc details
+    print("# Enter 3 Process Details #")
     bursts = []
     ios = []
     for i in range(numProc):
-        procDeets = input("Enter details for process " + str(i+1) + " (PID, Arrival Time, Burst, I/O): ").split(";")
+        procDeets = input().split(";")
         pid = procDeets[0]
         arrival = int(procDeets[1])
         for i in range(2, len(procDeets)):
@@ -220,4 +219,6 @@ if __name__ == "__main__":
         bursts = []
         ios = []
 
+    print("# Scheduling Results #")
     mlfq.run()
+
