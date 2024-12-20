@@ -1,0 +1,321 @@
+# Enter Scheduler Details #
+3
+8
+8
+0
+# Enter 3 Process Details #
+A;0;9;1;8;1;3
+B;0;9;1;8;1;2
+C;0;9;1;8;1;1
+# Scheduling Results #
+At Time = 0
+Arriving : [A, B, C]
+Queues : [B, C];[];[]
+CPU : A
+
+
+At Time = 1
+Queues : [B, C];[];[]
+CPU : A
+
+
+At Time = 2
+Queues : [B, C];[];[]
+CPU : A
+
+
+At Time = 3
+Queues : [B, C];[];[]
+CPU : A
+
+
+At Time = 4
+Queues : [C, A];[];[]
+CPU : B
+
+
+At Time = 5
+Queues : [C, A];[];[]
+CPU : B
+
+
+At Time = 6
+Queues : [C, A];[];[]
+CPU : B
+
+
+At Time = 7
+Queues : [C, A];[];[]
+CPU : B
+
+
+At Time = 8
+Queues : [A, B];[];[]
+CPU : C
+
+
+At Time = 9
+Queues : [A, B];[];[]
+CPU : C
+
+
+At Time = 10
+Queues : [A, B];[];[]
+CPU : C
+
+
+At Time = 11
+Queues : [A, B];[];[]
+CPU : C
+
+
+At Time = 12
+Queues : [B, C];[];[]
+CPU : A
+
+
+At Time = 13
+Queues : [B, C];[];[]
+CPU : A
+
+
+At Time = 14
+Queues : [B, C];[];[]
+CPU : A
+
+
+At Time = 15
+Queues : [B, C];[];[]
+CPU : A
+
+
+At Time = 16
+Queues : [C];[A];[]
+CPU : B
+A DEMOTED
+
+
+At Time = 17
+Queues : [C];[A];[]
+CPU : B
+
+
+At Time = 18
+Queues : [C];[A];[]
+CPU : B
+
+
+At Time = 19
+Queues : [C];[A];[]
+CPU : B
+
+
+At Time = 20
+Queues : [];[A, B];[]
+CPU : C
+B DEMOTED
+
+
+At Time = 21
+Queues : [];[A, B];[]
+CPU : C
+
+
+At Time = 22
+Queues : [];[A, B];[]
+CPU : C
+
+
+At Time = 23
+Queues : [];[A, B];[]
+CPU : C
+
+
+At Time = 24
+Queues : [];[B, C];[]
+CPU : A
+C DEMOTED
+
+
+At Time = 25
+Queues : [];[C];[]
+CPU : B
+I/O : [A]
+
+
+At Time = 26
+Queues : [];[A];[]
+CPU : C
+I/O : [B]
+
+
+At Time = 27
+Queues : [];[B];[]
+CPU : A
+I/O : [C]
+
+
+At Time = 28
+Queues : [];[B, C];[]
+CPU : A
+
+
+At Time = 29
+Queues : [];[B, C];[]
+CPU : A
+
+
+At Time = 30
+Queues : [];[B, C];[]
+CPU : A
+
+
+At Time = 31
+Queues : [];[B, C];[]
+CPU : A
+
+
+At Time = 32
+Queues : [];[B, C];[]
+CPU : A
+
+
+At Time = 33
+Queues : [];[B, C];[]
+CPU : A
+
+
+At Time = 34
+Queues : [];[B, C];[]
+CPU : A
+
+
+At Time = 35
+Queues : [];[C];[]
+CPU : B
+I/O : [A]
+
+
+At Time = 36
+Queues : [];[C];[A]
+CPU : B
+
+
+At Time = 37
+Queues : [];[C];[A]
+CPU : B
+
+
+At Time = 38
+Queues : [];[C];[A]
+CPU : B
+
+
+At Time = 39
+Queues : [];[C];[A]
+CPU : B
+
+
+At Time = 40
+Queues : [];[C];[A]
+CPU : B
+
+
+At Time = 41
+Queues : [];[C];[A]
+CPU : B
+
+
+At Time = 42
+Queues : [];[C];[A]
+CPU : B
+
+
+At Time = 43
+Queues : [];[];[A]
+CPU : C
+I/O : [B]
+
+
+At Time = 44
+Queues : [];[];[B, A]
+CPU : C
+
+
+At Time = 45
+Queues : [];[];[B, A]
+CPU : C
+
+
+At Time = 46
+Queues : [];[];[B, A]
+CPU : C
+
+
+At Time = 47
+Queues : [];[];[B, A]
+CPU : C
+
+
+At Time = 48
+Queues : [];[];[B, A]
+CPU : C
+
+
+At Time = 49
+Queues : [];[];[B, A]
+CPU : C
+
+
+At Time = 50
+Queues : [];[];[B, A]
+CPU : C
+
+
+At Time = 51
+Queues : [];[];[A]
+CPU : B
+I/O : [C]
+
+
+At Time = 52
+Queues : [];[];[C, A]
+CPU : B
+
+
+At Time = 53
+B DONE
+Queues : [];[];[A]
+CPU : C
+
+
+At Time = 54
+C DONE
+Queues : [];[];[]
+CPU : A
+
+
+At Time = 55
+Queues : [];[];[]
+CPU : A
+
+
+At Time = 56
+Queues : [];[];[]
+CPU : A
+
+
+At Time = 57
+A DONE
+Queues : [];[];[]
+CPU : []
+
+SIMULATION DONE
+
+Turn-around time for Process A : 57 - 0 = 57 ms
+Turn-around time for Process B : 53 - 0 = 53 ms
+Turn-around time for Process C : 54 - 0 = 54 ms
+Average Turn-around time = 54.67 ms
+Waiting time for Process A : 35 ms
+Waiting time for Process B : 32 ms
+Waiting time for Process C : 34 ms
