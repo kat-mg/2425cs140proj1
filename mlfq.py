@@ -22,7 +22,7 @@ class MLFQ:
     def __init__(self, q1TimeAllotment, q2TimeAllotment, contextSwitch):
         self.timeAllotment = [q1TimeAllotment, q2TimeAllotment]
         self.queues = [[], [], []]
-        self.prevProc = None                            # Previously run process in each queue
+        self.prevProc = None                            # Previously run process
         self.contextSwitch = contextSwitch
         self.procs = []
         self.time = 0
@@ -46,6 +46,12 @@ class MLFQ:
         if self.io:
             print("IO : ", self.io)
 
+        print("\nProcesses:")
+        for proc in self.procs:
+            print(f"{proc.pid} -> Priority: {proc.priority}, Burst: {proc.burst}, "
+                f"TimeAllotment: {proc.timeAllotment}, IO: {proc.io}, "
+                f"Quantum: {proc.quantum}, Turnaround: {proc.turnaround}, WaitTime: {proc.waitTime}")
+
         print("")
 
     def calculateAverageTurnaround(self):
@@ -66,6 +72,9 @@ class MLFQ:
         willContextSwitch = 0
         finished = False
         while not finished:
+            if self.time == 20:
+                break
+            
             print("At Time = ", self.time)
 
             # Arrange Q3 for SJF
@@ -84,59 +93,72 @@ class MLFQ:
 
             # Check if current process will give up CPU
             if self.running is not None:
-                if self.running.burst[0] == 0:                                             # Process burst finished
-                    if self.running.io:                                                    # Process has IO
-                        self.io.append(self.running)                                       # Add to IO list
-                        if self.running.timeAllotment != 0:                                # If time allotment is 0
-                            self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
-                            self.running.quantum = 4                                           # Reset quantum
+                preempted = False
+                print("preempted: ", preempted)
+                for i in range(3):
+                    if self.queues[i] and self.running.priority < i:
+                            self.queues[self.running.priority].append(self.running)
+                            self.prevProc = self.running
+                            self.running = None
+                            willContextSwitch = self.contextSwitch
+                            preempted = True
+                            break
+                
+                if not preempted:
+                    if self.running.burst[0] == 0:                                             # Process burst finished
+                        if self.running.io:                                                    # Process has IO
+                            self.io.append(self.running)                                       # Add to IO list
+                            if self.running.timeAllotment != 0:                                # If time allotment is 0, reset times
+                                self.running.timeAllotment = self.timeAllotment[self.running.priority]
+                                self.running.quantum = 4                                        
+                            else:
+                                self.running.priority += 1                                     # Lower priority
+                        if self.running.burst[1:]:                                             # Process has more bursts
+                            self.running.burst.pop(0)                                          # Remove the finished burst
                         else:
-                            self.running.priority += 1                                         # Lower priority
-                    if self.running.burst[1:]:                                             # Process has more bursts
-                        self.running.burst.pop(0)                                          # Remove the finished burst
+                            if not self.running.io:                                            # Process has no IO
+                                print(self.running.pid, " DONE")                               
+                                self.running.turnaround = self.time - self.running.arrival
+                                self.running.waitTime = self.running.turnaround - self.running.totalBurst - self.running.totalIO
+                                self.running.endTime = self.time
+                        self.prevProc = self.running                                           # Assign as previous process
+                        self.running = None
+                        willContextSwitch = self.contextSwitch
+
+                    elif self.running.timeAllotment == 0 and self.running.priority < 2:        # Time allotment expired
+                        self.running.priority += 1                                             # Lower priority
+                        self.queues[self.running.priority].append(self.running)                # Move to lower queue
+                        if (self.running.priority < 2):                                        # If it's not Q2, set time allotment
+                            self.running.timeAllotment = self.timeAllotment[self.running.priority]
+                        print(self.running.pid, " DEMOTED")
+                        self.prevProc = self.running                                           # Assign as previous process
+                        self.running = None                         
+                        willContextSwitch = self.contextSwitch
+
+                    elif self.running.priority == 0 and self.running.quantum == 0:             # If it's Q1 (RR) and time quantum expired
+                        self.queues[0].append(self.running)                                    # Move to end of Q1
+                        self.running.quantum = 4                                               # Reset quantum
+                        self.prevProc = self.running                                           # Assign as previous process
+                        self.running = None
+                        willContextSwitch = self.contextSwitch
                     else:
-                        if not self.running.io:                                            # Process has no IO
-                            print(self.running.pid, " DONE")                                   # Proc is done
-                            self.running.turnaround = self.time - self.running.arrival         # Calculate turnaround time
-                            self.running.waitTime = self.running.turnaround - self.running.totalBurst - self.running.totalIO # Calculate wait time
-                            self.running.endTime = self.time
-                    self.prevProc = self.running                                           # Assign as previous process
-                    self.running = None
-                    willContextSwitch = self.contextSwitch
-
-                elif self.running.timeAllotment == 0 and self.running.priority < 2:        # Time allotment expired
-                    self.running.priority += 1                                             # Lower priority
-                    self.queues[self.running.priority].append(self.running)                # Move to lower queue
-                    if (self.running.priority < 2):                                       # If it's not Q2
-                        self.running.timeAllotment = self.timeAllotment[self.running.priority] # Set time allotment
-                    print(self.running.pid, " DEMOTED")
-                    self.prevProc = self.running                                           # Assign as previous process
-                    self.running = None                         
-                    willContextSwitch = self.contextSwitch
-
-                elif self.running.priority == 0 and self.running.quantum == 0:   # If it's Q1 (RR) and time quantum expired
-                    self.queues[0].append(self.running)              # Move to end of Q1
-                    self.running.quantum = 4                         # Reset quantum
-                    self.prevProc = self.running                     # Assign as previous process
-                    self.running = None
-                    willContextSwitch = self.contextSwitch
-
+                        pass          
                 else:
-                    pass          
+                    pass
                 
             # Check if IO process will finish
             for proc in self.io[:]:
-                if proc.io[0] == 0:
-                    if proc.burst[0] != 0:
+                if proc.io[0] == 0:                                             # IO burst finished
+                    if proc.burst[0] != 0:                                      # If process has bursts left, add back to queue
                         self.queues[proc.priority].append(proc)
                         self.io.remove(proc)
-                        proc.io.pop(0)  # Remove the completed IO burst
-                    else:
-                        print(proc.pid, " DONE")                            # Proc is done
+                        proc.io.pop(0)
+                    else:                                                       # If process has no bursts left, process is done
+                        print(proc.pid, " DONE")                            
                         self.io.remove(proc)
-                        proc.io.pop(0)                                      # Remove the completed IO burst
-                        proc.turnaround = self.time - proc.arrival          # Calculate turnaround time
-                        proc.waitTime = proc.turnaround - proc.totalBurst - proc.totalIO # Calculate wait time
+                        proc.io.pop(0)
+                        proc.turnaround = self.time - proc.arrival
+                        proc.waitTime = proc.turnaround - proc.totalBurst - proc.totalIO
                         proc.endTime = self.time
 
             # Check next process to run
@@ -147,7 +169,8 @@ class MLFQ:
                         current = self.queues[i][0]
                         break
 
-            if willContextSwitch > 0:                                  # Context switching in progress
+            # Context switch
+            if willContextSwitch > 0:
                 if current != self.prevProc:                           # If the process is not the previous process, then CS
                     print(f"CONTEXT SWITCHING: {willContextSwitch}ms left")
                     willContextSwitch -= 1
