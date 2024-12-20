@@ -1,0 +1,298 @@
+# Enter Scheduler Details #
+4
+8
+8
+0
+# Enter 4 Process Details #
+W;0;20
+X;0;10;5;5
+Y;0;15;5
+Z;0;10;10
+# Scheduling Results #
+At Time = 0
+Arriving: [W,X,Y,Z]
+Queues : [X, Y, Z];[];[]
+CPU : W
+
+At Time = 1
+Queues : [X, Y, Z];[];[]
+CPU : W
+
+At Time = 2
+Queues : [X, Y, Z];[];[]
+CPU : W
+
+At Time = 3
+Queues : [X, Y, Z];[];[]
+CPU : W
+
+At Time = 4
+Queues : [Y, Z, W];[];[]
+CPU : X
+
+At Time = 5
+Queues : [Y, Z, W];[];[]
+CPU : X
+
+At Time = 6
+Queues : [Y, Z, W];[];[]
+CPU : X
+
+At Time = 7
+Queues : [Y, Z, W];[];[]
+CPU : X
+
+At Time = 8
+Queues : [Z, W, X];[];[]
+CPU : Y
+
+At Time = 9
+Queues : [Z, W, X];[];[]
+CPU : Y
+
+At Time = 10
+Queues : [Z, W, X];[];[]
+CPU : Y
+
+At Time = 11
+Queues : [Z, W, X];[];[]
+CPU : Y
+
+At Time = 12
+Queues : [W, X, Y];[];[]
+CPU : Z
+
+At Time = 13
+Queues : [W, X, Y];[];[]
+CPU : Z
+
+At Time = 14
+Queues : [W, X, Y];[];[]
+CPU : Z
+
+At Time = 15
+Queues : [W, X, Y];[];[]
+CPU : Z
+
+At Time = 16
+Queues : [X, Y, Z];[];[]
+CPU : W
+
+At Time = 17
+Queues : [X, Y, Z];[];[]
+CPU : W
+
+At Time = 18
+Queues : [X, Y, Z];[];[]
+CPU : W
+
+At Time = 19
+Queues : [X, Y, Z];[];[]
+CPU : W
+
+At Time = 20
+W DEMOTED
+Queues : [Y, Z];[W];[]
+CPU : X
+
+At Time = 21
+Queues : [Y, Z];[W];[]
+CPU : X
+
+At Time = 22
+Queues : [Y, Z];[W];[]
+CPU : X
+
+At Time = 23
+Queues : [Y, Z];[W];[]
+CPU : X
+
+At Time = 24
+X DEMOTED
+Queues : [Z];[W, X];[]
+CPU : Y
+
+At Time = 25
+Queues : [Z];[W, X];[]
+CPU : Y
+
+At Time = 26
+Queues : [Z];[W, X];[]
+CPU : Y
+
+At Time = 27
+Queues : [Z];[W, X];[]
+CPU : Y
+
+At Time = 28
+Y DEMOTED
+Queues : [];[W, X, Y];[]
+CPU : Z
+
+At Time = 29
+Queues : [];[W, X, Y];[]
+CPU : Z
+
+At Time = 30
+Queues : [];[W, X, Y];[]
+CPU : Z
+
+At Time = 31
+Queues : [];[W, X, Y];[]
+CPU : Z
+
+At Time = 32
+Z DEMOTED
+Queues : [];[X, Y, Z];[]
+CPU : W
+
+At Time = 33
+Queues : [];[X, Y, Z];[]
+CPU : W
+
+At Time = 34
+Queues : [];[X, Y, Z];[]
+CPU : W
+
+At Time = 35
+Queues : [];[X, Y, Z];[]
+CPU : W
+
+At Time = 36
+Queues : [];[X, Y, Z];[]
+CPU : W
+
+At Time = 37
+Queues : [];[X, Y, Z];[]
+CPU : W
+
+At Time = 38
+Queues : [];[X, Y, Z];[]
+CPU : W
+
+At Time = 39
+Queues : [];[X, Y, Z];[]
+CPU : W
+
+At Time = 40
+W DEMOTED
+Queues : [];[Y, Z];[W]
+CPU : X
+
+At Time = 41
+Queues : [];[Y, Z];[W]
+CPU : X
+
+At Time = 42
+Queues : [];[Z];[W]
+CPU : Y
+IO : [X]
+
+At Time = 43
+Queues : [];[Z];[W]
+CPU : Y
+IO : [X]
+
+At Time = 44
+Queues : [];[Z];[W]
+CPU : Y
+IO : [X]
+
+At Time = 45
+Queues : [];[Z];[W]
+CPU : Y
+IO : [X]
+
+At Time = 46
+Queues : [];[Z];[W]
+CPU : Y
+IO : [X]
+
+At Time = 47
+Queues : [];[Z, X];[W]
+CPU : Y
+
+At Time = 48
+Queues : [];[Z, X];[W]
+CPU : Y
+
+At Time = 49
+Queues : [];[X];[W]
+CPU : Z
+IO : [Y]
+
+At Time = 50
+Queues : [];[X];[W]
+CPU : Z
+IO : [Y]
+
+At Time = 51
+Queues : [];[];[W]
+CPU : X
+IO : [Y,Z]
+
+At Time = 52
+Queues : [];[];[W]
+CPU : X
+IO : [Y,Z]
+
+At Time = 53
+Queues : [];[];[W]
+CPU : X
+IO : [Y,Z]
+
+At Time = 54
+Y DONE
+Queues : [];[];[W]
+CPU : X
+IO : [Z]
+
+At Time = 55
+Queues : [];[];[W]
+CPU : X
+IO : [Z]
+
+At Time = 56
+X DONE
+Queues : [];[];[]
+CPU : W
+IO : [Z]
+
+At Time = 57
+Queues : [];[];[]
+CPU : W
+IO : [Z]
+
+At Time = 58
+Queues : [];[];[]
+CPU : W
+IO : [Z]
+
+At Time = 59
+Queues : [];[];[]
+CPU : W
+IO : [Z]
+
+At Time = 60
+W DONE
+Queues : [];[];[]
+CPU : IDLE
+IO : [Z]
+
+At Time = 61
+Z DONE
+Queues : [];[];[]
+CPU : IDLE
+
+
+SIMULATION DONE
+
+Turn-around time for Process W : 60 - 0 = 60 ms
+Turn-around time for Process X : 56 - 0 = 56 ms
+Turn-around time for Process Y : 54 - 0 = 54 ms
+Turn-around time for Process Z : 61 - 0 = 61 ms
+Average Turn-around time = 57.75 ms
+Waiting time for Process W : 40 ms
+Waiting time for Process X : 36 ms
+Waiting time for Process Y : 34 ms
+Waiting time for Process Z : 41 ms

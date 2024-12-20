@@ -1,0 +1,420 @@
+# Enter Scheduler Details #
+# Enter 3 Process Details #
+At Time = 0
+Arriving : [A]
+Queues : [];[];[]
+CPU : A
+
+At Time = 1
+Queues : [];[];[]
+CPU : A
+
+At Time = 2
+Arriving : [B]
+Queues : [B];[];[]
+CPU : A
+
+At Time = 3
+Queues : [B];[];[]
+CPU : A
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 4
+Arriving : [C]
+Queues : [C, A];[];[]
+CPU : B
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 5
+Queues : [C, A];[];[]
+CPU : B
+
+At Time = 6
+Queues : [C, A];[];[]
+CPU : B
+
+At Time = 7
+Queues : [C, A];[];[]
+CPU : B
+
+At Time = 8
+Queues : [C, A];[];[]
+CPU : B
+
+At Time = 9
+Queues : [C, A];[];[]
+CPU : B
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 10
+Queues : [A, B];[];[]
+CPU : C
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 11
+Queues : [A, B];[];[]
+CPU : C
+
+At Time = 12
+Queues : [A, B];[];[]
+CPU : C
+
+At Time = 13
+Queues : [A, B];[];[]
+CPU : C
+
+At Time = 14
+Queues : [A, B];[];[]
+CPU : C
+
+At Time = 15
+Queues : [A, B];[];[]
+CPU : C
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 16
+Queues : [B, C];[];[]
+CPU : A
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 17
+Queues : [B, C];[];[]
+CPU : A
+
+At Time = 18
+Queues : [B, C];[];[]
+CPU : A
+
+At Time = 19
+Queues : [B, C];[];[]
+CPU : A
+
+At Time = 20
+Queues : [B, C];[];[]
+CPU : A
+
+At Time = 21
+Queues : [B, C];[];[]
+CPU : A
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 22
+Queues : [C, A];[];[]
+CPU : B
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 23
+Queues : [C, A];[];[]
+CPU : B
+
+At Time = 24
+Queues : [C, A];[];[]
+CPU : B
+
+At Time = 25
+Queues : [C, A];[];[]
+CPU : B
+
+At Time = 26
+Queues : [C, A];[];[]
+CPU : B
+
+At Time = 27
+Queues : [C, A];[];[]
+CPU : B
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 28
+Queues : [A];[];[]
+CPU : C
+I/O : [B]
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 29
+Queues : [A];[];[]
+CPU : C
+I/O : [B]
+
+At Time = 30
+Queues : [A];[];[]
+CPU : C
+I/O : [B]
+
+At Time = 31
+Queues : [A, B];[];[]
+CPU : C
+
+At Time = 32
+Queues : [A, B];[];[]
+CPU : C
+
+At Time = 33
+Queues : [A, B];[];[]
+CPU : C
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 34
+Queues : [B, C];[];[]
+CPU : A
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 35
+Queues : [B, C];[];[]
+CPU : A
+
+At Time = 36
+Queues : [B, C];[];[]
+CPU : A
+
+At Time = 37
+Queues : [B, C];[];[]
+CPU : A
+
+At Time = 38
+Queues : [B, C];[];[]
+CPU : A
+
+At Time = 39
+Queues : [B, C];[];[]
+CPU : A
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 40
+Queues : [C];[];[]
+CPU : B
+I/O : [A]
+A DEMOTED
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 41
+Queues : [C];[];[]
+CPU : B
+I/O : [A]
+
+At Time = 42
+Queues : [C];[A];[]
+CPU : B
+
+At Time = 43
+Queues : [C];[A];[]
+CPU : B
+
+At Time = 44
+Queues : [C];[A];[]
+CPU : B
+
+At Time = 45
+Queues : [C];[A];[]
+CPU : B
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 46
+Queues : [B];[A];[]
+CPU : C
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 47
+Queues : [B];[A];[]
+CPU : C
+
+At Time = 48
+Queues : [B];[A];[]
+CPU : C
+
+At Time = 49
+Queues : [B];[A];[]
+CPU : C
+
+At Time = 50
+Queues : [B];[A];[]
+CPU : C
+
+At Time = 51
+Queues : [B];[A];[]
+CPU : C
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 52
+Queues : [];[A, C];[]
+CPU : B
+C DEMOTED
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 53
+Queues : [];[A, C];[]
+CPU : B
+
+At Time = 54
+Queues : [];[A, C];[]
+CPU : B
+
+At Time = 55
+Queues : [];[A, C];[]
+CPU : B
+
+At Time = 56
+Queues : [];[A, C];[]
+CPU : B
+
+At Time = 57
+Queues : [];[A, C];[]
+CPU : B
+
+At Time = 58
+Queues : [];[A, C];[]
+CPU : B
+
+At Time = 59
+Queues : [];[A, C];[]
+CPU : B
+
+At Time = 60
+Queues : [];[A, C];[]
+CPU : B
+
+At Time = 61
+Queues : [];[A, C];[]
+CPU : B
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 62
+Queues : [];[C];[]
+CPU : A
+I/O : [B]
+B DEMOTED
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 63
+Queues : [];[C];[]
+CPU : A
+I/O : [B]
+
+At Time = 64
+Queues : [];[C, B];[]
+CPU : A
+
+At Time = 65
+Queues : [];[C, B];[]
+CPU : A
+
+At Time = 66
+Queues : [];[C, B];[]
+CPU : A
+
+At Time = 67
+Queues : [];[C, B];[]
+CPU : A
+
+At Time = 68
+Queues : [];[C, B];[]
+CPU : A
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 69
+Queues : [];[B];[]
+CPU : C
+I/O : [A]
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 70
+A DONE
+Queues : [];[B];[]
+CPU : C
+
+At Time = 71
+Queues : [];[B];[]
+CPU : C
+
+At Time = 72
+Queues : [];[B];[]
+CPU : C
+
+At Time = 73
+Queues : [];[B];[]
+CPU : C
+
+At Time = 74
+Queues : [];[B];[]
+CPU : C
+
+At Time = 75
+Queues : [];[B];[]
+CPU : C
+
+At Time = 76
+Queues : [];[B];[]
+CPU : C
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 77
+Queues : [];[];[C]
+CPU : B
+C DEMOTED
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 78
+Queues : [];[];[C]
+CPU : B
+
+At Time = 79
+Queues : [];[];[C]
+CPU : B
+
+At Time = 80
+Queues : [];[];[C]
+CPU : B
+
+At Time = 81
+Queues : [];[];[C]
+CPU : B
+
+At Time = 82
+Queues : [];[];[C]
+CPU : B
+
+At Time = 83
+Queues : [];[];[C]
+CPU : B
+
+At Time = 84
+Queues : [];[];[C]
+CPU : B
+
+At Time = 85
+Queues : [];[];[C]
+CPU : B
+B DEMOTED
+
+CONTEXT SWITCHING 1 out of 2
+At Time = 86
+B DONE
+Queues : [];[];[]
+CPU : C
+
+CONTEXT SWITCHING 2 out of 2
+At Time = 87
+Queues : [];[];[]
+CPU : C
+
+At Time = 88
+Queues : [];[];[]
+CPU : C
+
+At Time = 89
+Queues : [];[];[]
+CPU : C
+
+At Time = 90
+C DONE
+Queues : [];[];[]
+CPU : []
+
+SIMULATION DONE
+
+Turn-around time for Process A : 70 - 0 = 70 ms
+Turn-around time for Process B : 86 - 2 = 84 ms
+Turn-around time for Process C : 90 - 4 = 86 ms
+Average Turn-around time = 80.0 ms
+Waiting time for Process A : 50 ms
+Waiting time for Process B : 52 ms
+Waiting time for Process C : 66 ms
