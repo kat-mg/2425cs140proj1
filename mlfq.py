@@ -20,7 +20,7 @@ class Proc:
 class MLFQ:
     
     def __init__(self, q1TimeAllotment, q2TimeAllotment, contextSwitch):
-        self.timeAllotment = [q1TimeAllotment, q2TimeAllotment, 0]
+        self.timeAllotment = [q1TimeAllotment, q2TimeAllotment, 2**31-1]
         self.queues = [[], [], []]
         self.prevProc = None                            # Previously run process in each queue
         self.contextSwitch = contextSwitch
@@ -108,7 +108,7 @@ class MLFQ:
                     if self.running.burst[0] == 0:                                             # Process burst finished
                         if self.running.io:                                                    # Process has IO
                             self.io.append(self.running)                                       # Add to IO list
-                            if self.running.timeAllotment != 0:                                # If time allotment is 0
+                            if self.running.timeAllotment != 0:                                # If time allotment is not 0
                                 self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
                                 self.running.quantum = 4                                           # Reset quantum
                             else:
