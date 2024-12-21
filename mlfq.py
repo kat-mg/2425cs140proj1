@@ -107,7 +107,7 @@ class MLFQ:
                                 self.running.timeAllotment = self.timeAllotment[self.running.priority] # Reset time allotment
                                 self.running.quantum = 4                                           # Reset quantum
                             else:
-                                print(self.running.pid, " DEMOTED")
+                                print(self.running.pid, "DEMOTED")
                                 self.queues[2].sort(key=lambda x: x.burst[0])
                                 self.running.priority += 1                                         # Lower priority
                                 self.running.timeAllotment = self.timeAllotment[self.running.priority]
@@ -115,7 +115,7 @@ class MLFQ:
                             self.running.burst.pop(0)                                          # Remove the finished burst
                         else:
                             if not self.running.io:                                            # Process has no IO
-                                print(self.running.pid, " DONE")                                   # Proc is done
+                                print(self.running.pid, "DONE")                                   # Proc is done
                                 procs.append(self.running)
                                 self.running.turnaround = self.time - self.running.arrival         # Calculate turnaround time
                                 self.running.waitTime = self.running.turnaround - self.running.totalBurst - self.running.totalIO # Calculate wait time
@@ -129,7 +129,7 @@ class MLFQ:
                         self.queues[self.running.priority].append(self.running)                # Move to lower queue
                         if (self.running.priority < 2):                                        # If it's not Q2
                             self.running.timeAllotment = self.timeAllotment[self.running.priority] # Set time allotment
-                        print(self.running.pid, " DEMOTED")
+                        print(self.running.pid, "DEMOTED")
                         self.queues[2].sort(key=lambda x: x.burst[0])
                         self.prevProc = self.running                                           # Assign as previous process
                         self.running = None                         
@@ -152,7 +152,7 @@ class MLFQ:
                         self.io.remove(proc)
                         proc.io.pop(0)  # Remove the completed IO burst
                     else:
-                        print(proc.pid, " DONE")                            # Proc is done
+                        print(proc.pid, "DONE")                            # Proc is done
                         procs.append(proc)
                         self.io.remove(proc)
                         proc.io.pop(0)                                      # Remove the completed IO burst
