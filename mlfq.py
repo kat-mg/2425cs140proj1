@@ -77,6 +77,7 @@ class MLFQ:
     def run(self):
         willContextSwitch = 0
         finished = False
+        procs = []
         while not finished:
             print("At Time = ", self.time)
 
@@ -115,6 +116,7 @@ class MLFQ:
                         else:
                             if not self.running.io:                                            # Process has no IO
                                 print(self.running.pid, " DONE")                                   # Proc is done
+                                procs.append(self.running)
                                 self.running.turnaround = self.time - self.running.arrival         # Calculate turnaround time
                                 self.running.waitTime = self.running.turnaround - self.running.totalBurst - self.running.totalIO # Calculate wait time
                                 self.running.endTime = self.time
@@ -151,6 +153,7 @@ class MLFQ:
                         proc.io.pop(0)  # Remove the completed IO burst
                     else:
                         print(proc.pid, " DONE")                            # Proc is done
+                        procs.append(proc)
                         self.io.remove(proc)
                         proc.io.pop(0)                                      # Remove the completed IO burst
                         proc.turnaround = self.time - proc.arrival          # Calculate turnaround time
@@ -201,12 +204,11 @@ class MLFQ:
             # Increment time
             self.time += 1
 
-            if not self.queues[0] and not self.queues[1] and not self.queues[2] and not self.running and not self.io:
+            if not self.queues[0] and not self.queues[1] and not self.queues[2] and not self.running and not self.io and len(procs) == len(self.procs):
                 finished = True
 
         print("SIMULATION DONE \n")
         self.printOutput()
-
 
 if __name__ == "__main__":
 
