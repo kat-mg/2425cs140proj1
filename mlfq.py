@@ -39,12 +39,12 @@ class MLFQ:
         print(f"Queues : {self.queues[0]};{self.queues[1]};{self.queues[2]}")
 
         if self.running:
-            print("CPU : ", self.running)
+            print("CPU :", self.running)
         else:
-            print("CPU : CS")
+            print("CPU : No process running")
 
         if self.io:
-            print("IO : ", self.io)
+            print("I/O :", self.io)
 
         print("")
 
@@ -58,7 +58,7 @@ class MLFQ:
         self.procs.sort(key=lambda x: x.pid)
         for proc in self.procs:
             print(f"Turn-around time for Process {proc.pid} : {proc.endTime} - {proc.arrival} = {proc.turnaround} ms")
-        print(f"Average Turn-around time: {self.calculateAverageTurnaround()} ms")
+        print(f"Average Turn-around time = {self.calculateAverageTurnaround()} ms")
         for proc in self.procs:
             print(f"Waiting time for Process {proc.pid} : {proc.waitTime} ms")
 
@@ -79,7 +79,7 @@ class MLFQ:
         finished = False
         procs = []
         while not finished:
-            print("At Time = ", self.time)
+            print("At Time =", self.time)
 
             # Arrange Q3 for SJF
             self.queues[2].sort(key=lambda x: x.burst[0])
@@ -91,7 +91,7 @@ class MLFQ:
                     procsArrived.append(proc)
             procsArrived.sort(key=lambda x: x.pid)                                         # Sort by proc name in case multiple processes arrive at the same time
             if procsArrived:
-                print("Arriving : ", procsArrived)
+                print("Arriving :", procsArrived)
             for proc in procsArrived:
                 self.addProcToQ1(proc)
 
