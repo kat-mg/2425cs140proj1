@@ -237,7 +237,7 @@ if __name__ == "__main__":
     mlfq = MLFQ(timeAllotments[0], timeAllotments[1], contextSwitch)
 
     # Get proc details
-    print("# Enter 3 Process Details #")
+    print(f"# Enter {numProc} Process Details #")
     bursts = []
     ios = []
     for i in range(numProc):
