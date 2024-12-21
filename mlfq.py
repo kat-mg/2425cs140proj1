@@ -35,7 +35,7 @@ class MLFQ:
     def addProcToQ1(self, proc):
         self.queues[0].append(proc)
 
-    def printQueuesCPUIODemo(self, demoted):
+    def printQueuesCPUIODemo(self, demoted, demotedProc):
         print(f"Queues : {self.queues[0]};{self.queues[1]};{self.queues[2]}")
 
         if self.running:
@@ -44,10 +44,10 @@ class MLFQ:
             print("CPU : No process running")
 
         if self.io:
-            print("IO :", self.io)
+            print("I/O :", self.io)
         
-        if demoted and self.running:
-            print(self.running.pid, "DEMOTED")
+        if demoted and demotedProc:
+            print(demotedProc.pid, "DEMOTED")
 
         print("")
 
@@ -82,7 +82,6 @@ class MLFQ:
         finished = False
         procs = []
         while not finished:
-            demoted = False
             print("At Time =", self.time)
 
             # Arrange Q3 for SJF
@@ -99,6 +98,8 @@ class MLFQ:
             for proc in procsArrived:
                 self.addProcToQ1(proc)
 
+            demoted = False
+            demotedProc = None
             # Check if current process will give up CPU
             if self.running is not None:
                 preempted = self.preemptionCheck()
@@ -112,6 +113,7 @@ class MLFQ:
                                 self.running.quantum = 4                                           # Reset quantum
                             else:
                                 demoted = True
+                                demotedProc = self.running
                                 self.queues[2].sort(key=lambda x: x.burst[0])
                                 self.running.priority += 1                                         # Lower priority
                                 self.running.timeAllotment = self.timeAllotment[self.running.priority]
@@ -134,6 +136,7 @@ class MLFQ:
                         if (self.running.priority < 2):                                        # If it's not Q2
                             self.running.timeAllotment = self.timeAllotment[self.running.priority] # Set time allotment
                         demoted = True
+                        demotedProc = self.running
                         self.queues[2].sort(key=lambda x: x.burst[0])
                         self.prevProc = self.running                                           # Assign as previous process
                         self.running = None                         
@@ -202,8 +205,11 @@ class MLFQ:
             # Subtract time to IO processes
             for proc in self.io:
                 proc.io[0] -= 1
+            
+            # Arrange Q3 for SJF (for printing purposes)
+            self.queues[2].sort(key=lambda x: x.burst[0])
 
-            self.printQueuesCPUIODemo(demoted)
+            self.printQueuesCPUIODemo(demoted, demotedProc)
 
             # Increment time
             self.time += 1
@@ -231,7 +237,7 @@ if __name__ == "__main__":
     mlfq = MLFQ(timeAllotments[0], timeAllotments[1], contextSwitch)
 
     # Get proc details
-    print(f"# Enter {numProc} Process Details #")
+    print("# Enter 3 Process Details #")
     bursts = []
     ios = []
     for i in range(numProc):

@@ -1,0 +1,7 @@
+SIMULATION DONE
+
+Turn-around time for Process W : 17 - 0 = 17 ms
+Turn-around time for Process X : 13 - 0 = 13 ms
+Average Turn-around time = 15.0 ms
+Waiting time for Process W : 7 ms
+Waiting time for Process X : 5 ms
