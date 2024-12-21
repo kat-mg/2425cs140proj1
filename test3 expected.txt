@@ -1,0 +1,118 @@
+At Time =  0
+Arriving :  [W, X]
+Queues : [X];[];[]
+CPU :  W
+
+At Time =  1
+Queues : [X];[];[]
+CPU :  W
+
+At Time =  2
+Queues : [X];[];[]
+CPU :  W
+
+At Time =  3
+W DEMOTED
+CONTEXT SWITCHING: 1ms left
+Queues : [X];[W];[]
+CPU : CS
+
+At Time =  4
+Queues : [];[W];[]
+CPU :  X
+
+At Time =  5
+Queues : [];[W];[]
+CPU :  X
+
+At Time =  6
+CONTEXT SWITCHING: 1ms left
+Queues : [];[W];[]
+CPU : CS
+IO :  [X]
+
+At Time =  7
+Queues : [];[];[]
+CPU :  W
+IO :  [X]
+
+At Time =  8
+CONTEXT SWITCHING: 1ms left
+Queues : [X];[W];[]
+CPU : CS
+
+At Time =  9
+Queues : [];[W];[]
+CPU :  X
+
+At Time =  10
+Queues : [];[W];[]
+CPU :  X
+
+At Time =  11
+Queues : [];[W];[]
+CPU :  X
+
+At Time =  12
+X DEMOTED
+CONTEXT SWITCHING: 1ms left
+Queues : [];[W, X];[]
+CPU : CS
+
+At Time =  13
+Queues : [];[X];[]
+CPU :  W
+
+At Time =  14
+Queues : [];[X];[]
+CPU :  W
+
+At Time =  15
+W DEMOTED
+CONTEXT SWITCHING: 1ms left
+Queues : [];[X];[W]
+CPU : CS
+
+At Time =  16
+Queues : [];[];[W]
+CPU :  X
+
+At Time =  17
+Queues : [];[];[W]
+CPU :  X
+
+At Time =  18
+X DONE
+CONTEXT SWITCHING: 1ms left
+Queues : [];[];[W]
+CPU : CS
+
+At Time =  19
+Queues : [];[];[]
+CPU :  W
+
+At Time =  20
+Queues : [];[];[]
+CPU :  W
+
+At Time =  21
+Queues : [];[];[]
+CPU :  W
+
+At Time =  22
+Queues : [];[];[]
+CPU :  W
+
+At Time =  23
+W DONE
+CONTEXT SWITCHING: 1ms left
+Queues : [];[];[]
+CPU : CS
+
+SIMULATION DONE
+
+Turn-around time for Process W : 23 - 0 = 23 ms
+Turn-around time for Process X : 18 - 0 = 18 ms
+Average Turn-around time: 20.5 ms
+Waiting time for Process W : 13 ms
+Waiting time for Process X : 9 ms
